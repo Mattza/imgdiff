@@ -1,3 +1,7 @@
+node_modules/
+img/
+client/
+
 # Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db

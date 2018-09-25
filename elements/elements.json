@@ -1,0 +1,5 @@
+[
+  { "name": "Sökruta", "css-selector": "#lst-ib" },
+  { "name": "Sökknapp", "css-selector": "[name=\"btnK\"]" },
+  { "name": "Första träffen", "css-selector": ".r a" }
+]

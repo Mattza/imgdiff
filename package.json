@@ -1,20 +1,20 @@
 {
-  "name": "imgdiff",
+  "name": "gherkintoimgdiff",
   "version": "1.0.0",
-  "description": "imgdiff-tester",
+  "description": "Generate Imgdifftestsspec from gherkin",
   "main": "index.js",
   "scripts": {
-    "start": "cd client && electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test_old": "npm run retirementGuide:b02 && npm run retirementGuide:b07 && npm run retirementGuide:b09",
+    "test": "cucumber-js -p b02"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.3",
-    "puppeteer": "^1.8.0"
+    "cucumber": "^5.1.0",
+    "gherkin": "^6.0.15",
+    "pixelmatch": "^4.0.2",
+    "pngjs": "^3.4.0",
+    "puppeteer": "^1.18.1"
   },
-  "devDependencies": {
-    "electron": "^3.0.0"
+  "engines": {
+    "node": "^10.12.0"
   }
 }

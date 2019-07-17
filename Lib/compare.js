@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { promisify } = require("util");
 const fsMakeDir = promisify(fs.mkdir);
+const fsExists = promisify(fs.exists);
 const PNG = require("pngjs").PNG;
 const pixelmatch = require("pixelmatch");
 
@@ -8,7 +9,11 @@ const readImg = path =>
   new Promise((res, rej) => {
     const img = fs
       .createReadStream(path)
-      .on("error", rej)
+      .on("error", e => {
+        console.log("köttbulle", e);
+
+        return rej(e);
+      })
       .on("err", rej)
       .pipe(new PNG())
       .on("parsed", _ => {
@@ -24,32 +29,27 @@ module.exports = {
     await fsMakeDir(`./diff/${projectName}`, opt);
   },
   compare: async filename => {
-    console.log("pling");
-
     const baselinePath = `baseline/${filename}`;
     const currentPath = `current/${filename}`;
     const diffPath = `diff/${filename}`;
 
+    if (!(await fsExists(currentPath))) {
+      throw "Image did not exist" + currentPath;
+    }
+
+    if (!(await fsExists(baselinePath))) {
+      console.warn(`Didn't found baseline, new test? ${baselinePath}`);
+      return 0;
+    }
     const currentImg = await readImg(currentPath).catch(err => {
       console.error(`Hittade inte bilden ${path}`);
     });
-    console.log("mider");
-    try {
-      const baselineImg = (await readImg(baselinePath)).catch(err => {
-        console.error(`Hittade inte baseline för ${baseline}`);
-        return 0;
-      });
-    } catch (e) {
-      console.log("JODO!; ", e);
-      console.error(`Hittade inte baseline för ${baseline}`);
-      return 0;
-    }
-    console.log("read", currentImg, baselineImg);
+
+    const baselineImg = await readImg(baselinePath);
 
     if (!currentImg || !baselineImg) {
       return;
     }
-    console.log("mid");
 
     var diff = new PNG({
       width: currentImg.width,
@@ -68,7 +68,6 @@ module.exports = {
     );
 
     diff.pack().pipe(fs.createWriteStream(diffPath));
-    console.log("plong", pixelmatchOutput);
     return pixelmatchOutput;
   }
 };

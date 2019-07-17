@@ -2,10 +2,13 @@
   "name": "gherkintoimgdiff",
   "version": "1.0.0",
   "description": "Generate Imgdifftestsspec from gherkin",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test_old": "npm run retirementGuide:b02 && npm run retirementGuide:b07 && npm run retirementGuide:b09",
     "test": "cucumber-js -p b02"
+  },
+  "bin": {
+    "gherkintoimgdiff": "./bin/gherkintoimgdiff.js"
   },
   "dependencies": {
     "cucumber": "^5.1.0",

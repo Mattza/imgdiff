@@ -62,8 +62,8 @@ class ImgDiffWorld {
     const faultyPixels = await compare(filename).catch(err => {
       throw "comparator failed " + err;
     });
-    if (faultyPixels > 0) {
-      throw "Fel i bilden: " + filename;
+    if (faultyPixels > settings.faultyTolerance || 0) {
+      throw `Diff of ${faultyPixels}pixels in: ${filename}`;
     }
   }
 

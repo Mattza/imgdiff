@@ -10,27 +10,19 @@ let operators = [
 export class Testset extends Component {
   state = {
     runResult: [],
-<<<<<<< HEAD
     elements: [],
-=======
->>>>>>> origin/master
     testSet: {}
   };
   async componentDidMount() {
     const { setName } = this.props.match.params;
     console.log("setName", this.props.match.params);
     const testSet = await fetchy(`/api/testSet/${setName}`);
-<<<<<<< HEAD
+
     const elements = [
       ...(await fetchy(`/api/elements`)).map(obj => obj.name),
       ""
     ];
-    console.log(elements);
     this.setState({ testSet, setName, elements }, () => this.run());
-=======
-
-    this.setState({ testSet, setName }, () => this.run());
->>>>>>> origin/master
   }
   run = async () => {
     const runResult = await fetchy(`/api/run/${this.state.setName}`);
@@ -101,22 +93,15 @@ export class Testset extends Component {
                   {["sendkey", "click", "screenshot"].includes(
                     step.operator
                   ) && (
-<<<<<<< HEAD
                     <Select
-=======
-                    <Input
->>>>>>> origin/master
                       label="element"
                       value={step["element"]}
                       onChange={this.handleChange}
                       name={`tests.${testIndex}.steps.${stepIndex}.element`}
-<<<<<<< HEAD
                       options={this.state.elements.map(text => ({
                         text,
                         value: text
                       }))}
-=======
->>>>>>> origin/master
                     />
                   )}
                   {["sendkey"].includes(step.operator) && (
@@ -160,11 +145,7 @@ const Select = ({ name, value, options, onChange, label }) => (
   <div className="form-element">
     <label htmlFor={name}>
       {label}
-<<<<<<< HEAD
       <select name={name} onChange={onChange} defaultValue={value}>
-=======
-      <select name={name} value={value} onChange={onChange}>
->>>>>>> origin/master
         {options.map(({ text, value }) => (
           <option key={value} value={value}>
             {text}
